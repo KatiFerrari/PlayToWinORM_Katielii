@@ -1,0 +1,16 @@
+<h1>Usuários Cadastrados</h1>
+
+<table border="1">
+    <tr>
+        <th>Id</th>
+        <th>Nickname</th>
+        <th>Nome</th>
+    </tr>
+    {{#each usuarios}}
+    <tr>
+        <th>{{this.id}}</th>
+        <th>{{this.nickname}}</th>
+        <th>{{this.nome}}</th>
+    </tr>
+    {{/each}}
+</table>
