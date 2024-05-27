@@ -54,6 +54,21 @@ app.get("/usuarios/:id/update", async (req,res)=>{
     res.render("formUsuario", {usuario})
 })
 
+app.post("/usuarios/:id/update", async (req,res)=>{
+    const id = paramsInt(req.params.id);
+    const { nickname, nome } = req.body;
+        const dadosUsuario = {
+            nickname: req.body.nickname,
+            nome: req.body.nome,
+    }
+const retorno = await Usuario.update({where:{id: id}},)
+if(retorno>0){
+    res.redirect("usuarios")
+}
+else{
+    res.send("Erro ao atualizar o usuário")
+}
+})
 
 app.listen(8000, () => {
     console.log("Servidor está ouvindo na porta 8000");
