@@ -2,8 +2,6 @@ require("dotenv").config();
 const conn = require("./db/conn");
 const Usuario = require("./models/Usuario");
 const express = require("express");
-
-
 const exphbs = require ("express-handlebars");
 
 //instanciação do server
@@ -27,9 +25,12 @@ app.get("/usuarios", async (req,res)=>{
 
 });
 
-app.get("/usuarios/novo", (req,res)=>{
+app.get("/usuarios/novo", (req ,res )=>{
+
     res.render("formUsuario")
 });
+
+
 
 app.post("/usuarios/novo", async (req, res) => {
     try {
@@ -45,6 +46,14 @@ app.post("/usuarios/novo", async (req, res) => {
         res.status(500).send("Erro ao inserir usuário");
     }
 });
+
+app.get("/usuarios/:id/update", async (req,res)=>{
+    const id= parseInt(req.params.id);
+    const usuario = Usuario.findByPk=(id, {raw: true}) 
+
+    res.render("formUsuario", {usuario})
+})
+
 
 app.listen(8000, () => {
     console.log("Servidor está ouvindo na porta 8000");

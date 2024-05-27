@@ -1,5 +1,5 @@
 <h1>Usuários Cadastrados</h1>
-
+<a href="/usuarios/novo">Cadastre-se aqui!</a>
 <table border="1">
     <tr>
         <th>Id</th>
@@ -11,6 +11,9 @@
         <th>{{this.id}}</th>
         <th>{{this.nickname}}</th>
         <th>{{this.nome}}</th>
+        <td>
+            <a href="/usuarios/{{this.id}}/update">Atualizar</a>
+        </td>
     </tr>
     {{/each}}
 </table>
