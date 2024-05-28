@@ -1,6 +1,7 @@
 require("dotenv").config();
 const conn = require("./db/conn");
 const Usuario = require("./models/Usuario");
+const Jogo = require("./models/Jogo");
 const express = require("express");
 const exphbs = require ("express-handlebars");
 
@@ -26,11 +27,8 @@ app.get("/usuarios", async (req,res)=>{
 });
 
 app.get("/usuarios/novo", (req ,res )=>{
-
     res.render("formUsuario")
 });
-
-
 
 app.post("/usuarios/novo", async (req, res) => {
     try {
@@ -44,6 +42,29 @@ app.post("/usuarios/novo", async (req, res) => {
     } catch (error) {
         console.error("Erro ao inserir usuário:", error);
         res.status(500).send("Erro ao inserir usuário");
+    }
+});
+
+app.get("/cadastrarJogo", (req, res) => {
+    res.sendFile(`${__dirname}/views/formJogo.html`);
+});
+app.post('/cadastrarJogo', async (req, res) => {
+
+    try {
+      const { titulo, descricao, precoBase } = req.body;
+      const dadosJogo = 
+      {
+        titulo, 
+        descricao, 
+        precoBase,
+    };
+    
+    const novoJogo = await Jogo.create(dadosJogo);
+     console.log(novoJogo)
+      res.send('Jogo inserido sob o id' + id);
+    } catch (error) {
+      console.error("Erro ao inserir usuário:", error);
+      res.status(500).send('Erro ao cadastrar jogo.');
     }
 });
 

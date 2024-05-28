@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastre um Jogo!</title>
+</head>
+<body>
+    <h1>Cadastro de Jogo</h1>
+  <form action="/cadastrarJogo" method="POST">
+    <div>
+      <label for="titulo">Título:</label>
+      <input type="text" id="titulo" name="titulo" required><br>
+    </div>  
+    <div>
+      <label for="descricao">Descrição:</label>
+      <input type="text" id="descricao" name="descricao" required><br>
+    </div>
+    <div>
+      <label for="precoBase">Preço Base:</label>
+      <input type="number"  id="precoBase" name="precoBase" required><br>
+    </div>
+    <button type="submit">Cadastrar Jogo</button>
+  </form>
+</body>
+</html>
