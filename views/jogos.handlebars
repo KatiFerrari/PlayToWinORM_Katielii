@@ -1,0 +1,18 @@
+<h1>Jogos Cadastrados</h1>
+<a href="/cadastrarJogo">Cadastre-se aqui!</a>
+<table border="1">
+    <tr>
+        <th>Id</th>
+        <th>Titulo</th>
+        <th>Descrição</th>
+        <th>Preço base</th>
+    </tr>
+    {{#each jogos}}
+    <tr>
+        <th>{{this.id}}</th>
+        <th>{{this.titulo}}</th>
+        <th>{{this.descricao}}</th>
+        <th>{{this.precoBase}}</th>
+    </tr>
+    {{/each}}
+</table>

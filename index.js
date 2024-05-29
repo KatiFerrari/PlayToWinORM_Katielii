@@ -1,5 +1,5 @@
 require("dotenv").config();
-const conn = require("./db/conn");
+const conn = require("./db/conn")
 const Usuario = require("./models/Usuario");
 const Jogo = require("./models/Jogo");
 const express = require("express");
@@ -23,6 +23,12 @@ app.get("/", (req,res)=>{
 app.get("/usuarios", async (req,res)=>{
     const usuarios = await Usuario.findAll({ raw: true})
     res.render("usuarios", { usuarios });
+
+});
+
+app.get("/jogos", async (req,res)=>{
+    const jogos  = await Jogo.findAll({ raw: true})
+    res.render("jogos", { jogos });
 
 });
 
@@ -51,7 +57,7 @@ app.get("/cadastrarJogo", (req, res) => {
 app.post('/cadastrarJogo', async (req, res) => {
 
     try {
-      const { titulo, descricao, precoBase } = req.body;
+      const {titulo, descricao, precoBase } = req.body;
       const dadosJogo = 
       {
         titulo, 
@@ -61,7 +67,7 @@ app.post('/cadastrarJogo', async (req, res) => {
     
     const novoJogo = await Jogo.create(dadosJogo);
      console.log(novoJogo)
-      res.send('Jogo inserido sob o id' + id);
+      res.send('Jogo inserido sob o id ' + novoJogo.id);
     } catch (error) {
       console.error("Erro ao inserir usuário:", error);
       res.status(500).send('Erro ao cadastrar jogo.');
