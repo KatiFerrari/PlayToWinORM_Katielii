@@ -13,6 +13,12 @@
         <th>{{this.titulo}}</th>
         <th>{{this.descricao}}</th>
         <th>{{this.precoBase}}</th>
+        <td>
+        <a href="/jogos/{{this.id}}/update">Atualizar</a>
+            <form action="/jogos/{{this.id}}/delete" method="post">
+            <input type="submit" value="Excluir"/>
+            </form>
+        </td>
     </tr>
     {{/each}}
 </table>

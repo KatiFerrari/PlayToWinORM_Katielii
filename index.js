@@ -32,6 +32,7 @@ app.get("/jogos", async (req,res)=>{
 
 });
 
+//cadastrar usuario
 app.get("/usuarios/novo", (req ,res )=>{
     res.render("formUsuario")
 });
@@ -50,9 +51,9 @@ app.post("/usuarios/novo", async (req, res) => {
         res.status(500).send("Erro ao inserir usuário");
     }
 });
-
-app.get("/cadastrarJogo", (req, res) => {
-    res.sendFile(`${__dirname}/views/formJogo.html`);
+//cadastrar jogo
+app.get("/cadastrarJogo", (req ,res )=>{
+    res.render("formJogo")
 });
 app.post('/cadastrarJogo', async (req, res) => {
 
@@ -69,18 +70,25 @@ app.post('/cadastrarJogo', async (req, res) => {
      console.log(novoJogo)
       res.send('Jogo inserido sob o id ' + novoJogo.id);
     } catch (error) {
-      console.error("Erro ao inserir usuário:", error);
+      console.error("Erro ao inserir jogo:", error);
       res.status(500).send('Erro ao cadastrar jogo.');
     }
 });
-
+//get de atualizar usuarios
 app.get("/usuarios/:id/update", async (req,res)=>{
-    const id= parseInt(req.params.id);
+    const id = parseInt(req.params.id);
     const usuario = Usuario.findByPk=(id, {raw: true}) 
 
     res.render("formUsuario", {usuario})
 })
 
+app.get("/jogos/:id/update", async (req,res)=>{
+    const id= parseInt(req.params.id);
+    const jogo = Jogo.findByPk=(id, {raw: true}) 
+
+    res.render("formJogo", {jogo})
+})
+//post de atualizar usuários
 app.post("/usuarios/:id/update", async (req,res)=>{
     const id = paramsInt(req.params.id);
     const { nickname, nome } = req.body;
@@ -88,7 +96,8 @@ app.post("/usuarios/:id/update", async (req,res)=>{
             nickname: req.body.nickname,
             nome: req.body.nome,
     }
-const retorno = await Usuario.update({where:{id: id}},)
+
+const retorno = await Usuario.update({where:{id: id}})
 if(retorno>0){
     res.redirect("usuarios")
 }
@@ -96,6 +105,46 @@ else{
     res.send("Erro ao atualizar o usuário")
 }
 })
+ //post de atualizar jogos
+app.post("/jogos/:id/update", async (req,res)=>{
+    const id = paramsInt(req.params.id);
+    const { nome, descricao, precoBase } = req.body;
+        const dadosJogos = {
+            nome: req.body.nome,
+            descricao: req.body.descricao,
+            precoBase: req.body.precoBase,
+
+    }
+const retorno = await Jogo.update({where:{id: id}})
+if(retorno>0){
+    res.redirect("jogos")
+}
+else{
+    res.send("Erro ao atualizar o jogo")
+}
+})
+
+//post de deletar usuário
+app.post("/usuarios/:id/delete", async (req, res)=>{
+ const id = parseInt(req.params.id)
+ const retorno = await Usuario.destroy({ where: {id: id}})
+ if(retorno>0){
+    res.redirect("/usuarios")
+}
+else{
+    res.send("Erro ao deletar usuário")
+}})
+
+//post de deletar jogo
+app.post("/jogos/:id/delete", async (req, res)=>{
+    const id = parseInt(req.params.id)
+    const retorno = await Jogo.destroy({ where: {id: id}})
+    if(retorno>0){
+       res.redirect("/jogos")
+   }
+   else{
+       res.send("Erro ao deletar jogo")
+   }})
 
 app.listen(8000, () => {
     console.log("Servidor está ouvindo na porta 8000");
