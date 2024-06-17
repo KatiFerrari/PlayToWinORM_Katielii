@@ -2,6 +2,7 @@ require("dotenv").config();
 const conn = require("./db/conn")
 const Usuario = require("./models/Usuario");
 const Jogo = require("./models/Jogo");
+const Cartao = require("../models/Cartao");
 const express = require("express");
 const exphbs = require ("express-handlebars");
 
@@ -145,6 +146,20 @@ app.post("/jogos/:id/delete", async (req, res)=>{
    else{
        res.send("Erro ao deletar jogo")
    }})
+
+   //Rotas para cartões
+   app.get("/usuarios/:id/cartoes", async(req, res) =>{
+    const id = parseInt(req.params.id)
+    const retorno = await Usuario.findByPk(id, {raw: true})
+
+    res.render("cartões.handlebars")
+   }
+   )
+
+   //Formulário de cartões
+   app.get("/usuarios/:id/novoCartao", async (req, res) =>{
+    res.render("formCartao", {usuario})
+   })
 
 app.listen(8000, () => {
     console.log("Servidor está ouvindo na porta 8000");
