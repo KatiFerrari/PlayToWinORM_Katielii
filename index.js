@@ -3,11 +3,9 @@ const conn = require("./db/conn")
 const Usuario = require("./models/Usuario");
 const Jogo = require("./models/Jogo");
 const Cartao = require("./models/Cartao");
+const Conquista = require("./models/Conquista");
 const express = require("express");
 const exphbs = require ("express-handlebars");
-
-Jogo.belongsToMany(Usuario, { through: "aquisicoes" });
-Usuario.belongsToMany(Jogo, { through: "aquisicoes" });
 
 //instanciação do server
 const app = express();
