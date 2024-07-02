@@ -190,6 +190,45 @@ app.get("/usuarios/:id/cartoes", async (req, res) => {
   });
   
 
+  // Rotas para conquista
+
+//Ver conquista dos jogos
+app.get("/jogos/:id/conquistas", async (req, res) => {
+    const id = parseInt(req.params.id);
+    const jogo = await Jogo.findByPk(id, { raw: true });
+  
+    const conquistas = await Conquista.findAll({
+      raw: true,
+      where: { JogoId: id },
+    });
+  
+    res.render("conquistas.handlebars", { jogo, conquistas });
+  });
+  
+  //Formulário de cadastro de conquista
+  app.get("/jogos/:id/novaConquista", async (req, res) => {
+    const id = parseInt(req.params.id);
+    const jogo = await Jogo.findByPk(id, { raw: true });
+  
+    res.render("formConquista", { jogo });
+  });
+  
+  //Cadastro de conquista
+  app.post("/jogos/:id/novaConquista", async (req, res) => {
+    const id = parseInt(req.params.id);
+  
+    const dadosConquista = {
+      nome: req.body.nome,
+      descricao: req.body.descricao,
+      JogoId: id,
+    };
+  
+    await Conquista.create(dadosConquista);
+  
+    res.redirect(`/jogos/${id}/conquistas`);
+  });
+  
+
 app.listen(8000, () => {
     console.log("Servidor está ouvindo na porta 8000");
 });
